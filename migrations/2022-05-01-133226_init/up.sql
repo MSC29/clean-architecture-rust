@@ -1,0 +1,2 @@
+-- Your SQL goes here
+CREATE TABLE IF NOT EXISTS "dog_facts" (id INTEGER PRIMARY KEY AUTOINCREMENT, fact TEXT)

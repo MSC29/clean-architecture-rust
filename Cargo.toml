@@ -1,0 +1,39 @@
+[package]
+name = "identity_api"
+version = "1.0.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "identity_api"
+path = "src/main.rs"
+
+[lib]
+name = "identity_api"
+path = "src/lib.rs"
+
+[dependencies]
+actix = "~0.10.0"
+actix-web = { version = "=4.0.0-beta.8", features = ["openssl"] }
+actix-rt = "~2.2.0"
+actix-http = "3.0.0-beta.8"
+log = "~0.4.0"
+env_logger = "~0.7.1"
+failure = "~0.1.6"
+serde = "~1.0.104"
+serde_json = "~1.0"
+async-trait = "~0.1.22"
+awc = "~1.0.1"
+diesel = { version = "~1.4.4", features = ["postgres", "r2d2", "uuidv07", "sqlite"] }
+diesel_migrations = "~1.4"
+dotenv = "~0.15.0"
+r2d2 = "~0.8"
+tokio = { version = "1", features = ["full"] }
+thiserror = "1.0"
+derive_more = "0.99.0"
+reqwest={version="0.11", features = ["json"]}
+
+[dev-dependencies]
+cargo-tarpaulin = "0.18.0-alpha1"
+uuid = { version = "~0.8", features = ["serde", "v4"] }
