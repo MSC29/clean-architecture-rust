@@ -1,0 +1,83 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'animal_facts_api'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=animal_facts_api"
+                ],
+                "filter": {
+                    "name": "animal_facts_api",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'animal_facts_api'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=animal_facts_api",
+                    "--package=animal_facts_api"
+                ],
+                "filter": {
+                    "name": "animal_facts_api",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'animal_facts_api'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=animal_facts_api",
+                    "--package=animal_facts_api"
+                ],
+                "filter": {
+                    "name": "animal_facts_api",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'mod'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=mod",
+                    "--package=animal_facts_api"
+                ],
+                "filter": {
+                    "name": "mod",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

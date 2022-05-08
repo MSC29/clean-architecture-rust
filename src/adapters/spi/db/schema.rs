@@ -1,6 +1,6 @@
 table! {
     dog_facts (id) {
-        id -> Integer,
-        fact -> Text,
+        id -> Int4,
+        fact -> Varchar,
     }
 }

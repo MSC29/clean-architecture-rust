@@ -1,6 +1,6 @@
 use crate::{
-    application::{repositories::{cat_facts_repository_abstract::CatFactsRepositoryAbstract}, utils::error_handling_utils::ErrorHandlingUtils},
-    domain::{error::ApiError, cat_fact_entity::CatFactEntity},
+    application::{repositories::cat_facts_repository_abstract::CatFactsRepositoryAbstract, utils::error_handling_utils::ErrorHandlingUtils},
+    domain::{cat_fact_entity::CatFactEntity, error::ApiError},
 };
 
 pub struct GetOneRandomCatFactUseCase<'a> {
@@ -14,10 +14,10 @@ impl<'a> GetOneRandomCatFactUseCase<'a> {
     }
 
     pub async fn execute(&self) -> Result<CatFactEntity, ApiError> {
-        let identity_result = self.repository.get_cat_fact().await;
+        let cat_fact = self.repository.get_cat_fact().await;
 
-        match identity_result {
-            Ok(identity) => Ok(identity),
+        match cat_fact {
+            Ok(fact) => Ok(fact),
             Err(e) => Err(ErrorHandlingUtils::application_error("Cannot get random cat fact", Some(e))),
         }
     }

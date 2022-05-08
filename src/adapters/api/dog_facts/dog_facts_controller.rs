@@ -1,14 +1,15 @@
 use crate::{
     adapters::api::{
-        shared::{error_presenter::ErrorReponse, app_state::AppState}, dog_facts::dog_fact_presenter::DogFactPresenter,
-    }, application::usecases::{get_all_dog_facts_usecase::GetAllDogFactsUseCase, get_one_dog_fact_by_id_usecase::GetOneDogFactByIdUseCase}, domain::{dog_fact_entity::DogFactEntity, error::ApiError},
+        dog_facts::dog_fact_presenter::DogFactPresenter,
+        shared::{app_state::AppState, error_presenter::ErrorReponse},
+    },
+    application::usecases::{get_all_dog_facts_usecase::GetAllDogFactsUseCase, get_one_dog_fact_by_id_usecase::GetOneDogFactByIdUseCase},
+    domain::{dog_fact_entity::DogFactEntity, error::ApiError},
 };
 use actix_web::{get, web, HttpResponse};
 
 pub fn routes(cfg: &mut web::ServiceConfig) {
-    cfg
-        .service(get_all_dog_facts)
-        .service(get_one_dog_fact_by_id);
+    cfg.service(get_all_dog_facts).service(get_one_dog_fact_by_id);
 }
 
 #[get("/")]
@@ -31,4 +32,3 @@ async fn get_one_dog_fact_by_id(data: web::Data<AppState>, path: web::Path<(i32,
         .map_err(ErrorReponse::map_io_error)
         .and_then(|fact| Ok(HttpResponse::Ok().json(DogFactPresenter::from(fact))))
 }
-

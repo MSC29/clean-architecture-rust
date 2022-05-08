@@ -1,22 +1,16 @@
-use crate::utils::{
-    utils_setup::{setup, spawn_app}
-};
-use identity_api::adapters::api::{
-    dog_facts::dog_fact_presenter::DogFactPresenter,
-};
+use crate::utils::utils_setup::{setup, spawn_app};
+use animal_facts_api::adapters::api::dog_facts::dog_fact_presenter::DogFactPresenter;
 
 #[actix_rt::test]
 async fn test_should_return_multiple_results() {
     //setup
     let _ctx = setup();
-    let address = spawn_app(&_ctx.db_name);
+    let api_address = spawn_app(&_ctx.db_name);
 
     //given
 
     //when
-    let response = reqwest::get(&format!("{}/dogs/", &address))
-        .await
-        .expect("Failed to execute request.");
+    let response = reqwest::get(&format!("{}/api/v1/dogs/", &api_address)).await.expect("Failed to execute request.");
 
     //then
     assert!(response.status().is_success());
@@ -26,29 +20,27 @@ async fn test_should_return_multiple_results() {
     //TODO same data set as python
     assert_eq!(content_json.len(), 3);
     assert_eq!(content_json[0].fact_id, 1);
-    assert_eq!(content_json[0].txt, "a");
+    assert_eq!(content_json[0].txt, "Forty-five percent of U.S. dogs sleep in their owner's bed");
 }
 
 #[actix_rt::test]
 async fn test_should_return_one_results_only() {
     //setup
     let _ctx = setup();
-    let address = spawn_app(&_ctx.db_name);
+    let api_address = spawn_app(&_ctx.db_name);
 
     //given
-    let dog_fact_id: &str = "2";
+    let dog_fact_id: i8 = 2;
 
     //when
-    let response = reqwest::get(&format!("{}/dogs/{}", &address, &dog_fact_id))
-        .await
-        .expect("Failed to execute request.");
+    let response = reqwest::get(&format!("{}/api/v1/dogs/{}", &api_address, &dog_fact_id)).await.expect("Failed to execute request.");
 
     //then
-    assert!(!response.status().is_success());
+    assert!(response.status().is_success());
 
     let content_json = response.json::<DogFactPresenter>().await.unwrap();
 
     //TODO same data set as python
-    assert_eq!(content_json.txt, "b");
+    assert_eq!(content_json.txt, "Seventy percent of people sign their dog's name on their holiday cards");
     assert_eq!(content_json.fact_id, 2);
 }

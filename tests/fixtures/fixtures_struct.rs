@@ -1,5 +1,5 @@
+use animal_facts_api::adapters::spi::db::schema::*;
 use diesel::Insertable;
-use identity_api::adapters::spi::db::schema::*;
 use serde::Deserialize;
 
 #[derive(Deserialize, Insertable, Debug)]

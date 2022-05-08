@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::domain::{dog_fact_entity::DogFactEntity};
+use crate::domain::dog_fact_entity::DogFactEntity;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct DogFactPresenter {
@@ -10,10 +10,10 @@ pub struct DogFactPresenter {
 
 //TODO mapper
 impl DogFactPresenter {
-    pub fn from(identity: DogFactEntity) -> DogFactPresenter {
+    pub fn from(entity: DogFactEntity) -> DogFactPresenter {
         DogFactPresenter {
-            fact_id: identity.fact_id,
-            txt: identity.fact
+            fact_id: entity.fact_id,
+            txt: entity.fact,
         }
     }
 }

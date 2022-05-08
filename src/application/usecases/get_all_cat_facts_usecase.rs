@@ -1,6 +1,6 @@
 use crate::{
-    application::{repositories::{cat_facts_repository_abstract::CatFactsRepositoryAbstract}, utils::error_handling_utils::ErrorHandlingUtils},
-    domain::{error::ApiError, cat_fact_entity::CatFactEntity},
+    application::{repositories::cat_facts_repository_abstract::CatFactsRepositoryAbstract, utils::error_handling_utils::ErrorHandlingUtils},
+    domain::{cat_fact_entity::CatFactEntity, error::ApiError},
 };
 
 pub struct GetAllCatFactsUseCase<'a> {
@@ -14,10 +14,10 @@ impl<'a> GetAllCatFactsUseCase<'a> {
     }
 
     pub async fn execute(&self) -> Result<Vec<CatFactEntity>, ApiError> {
-        let targets = self.repository.get_cat_facts().await;
+        let cat_facts = self.repository.get_cat_facts().await;
 
-        match targets {
-            Ok(targets) => Ok(targets),
+        match cat_facts {
+            Ok(facts) => Ok(facts),
             Err(e) => Err(ErrorHandlingUtils::application_error("Cannot get all cat facts", Some(e))),
         }
     }

@@ -1,6 +1,6 @@
 use crate::{
     application::{repositories::dog_facts_repository_abstract::DogFactsRepositoryAbstract, utils::error_handling_utils::ErrorHandlingUtils},
-    domain::{error::ApiError, dog_fact_entity::DogEntities},
+    domain::{dog_fact_entity::DogEntities, error::ApiError},
 };
 
 pub struct GetAllDogFactsUseCase<'a> {
@@ -14,10 +14,10 @@ impl<'a> GetAllDogFactsUseCase<'a> {
     }
 
     pub async fn execute(&self) -> Result<DogEntities, ApiError> {
-        let targets = self.repository.get_all_dog_facts().await;
+        let dog_facts = self.repository.get_all_dog_facts().await;
 
-        match targets {
-            Ok(targets) => Ok(targets),
+        match dog_facts {
+            Ok(facts) => Ok(facts),
             Err(e) => Err(ErrorHandlingUtils::application_error("Cannot get all dog facts", Some(e))),
         }
     }

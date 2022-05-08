@@ -2,7 +2,7 @@ use dotenv::dotenv;
 use std::env;
 use std::net::TcpListener;
 
-use identity_api::run;
+use animal_facts_api::run;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {

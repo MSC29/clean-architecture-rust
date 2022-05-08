@@ -10,10 +10,10 @@ pub struct CatFactPresenter {
 
 //TODO mapper
 impl CatFactPresenter {
-    pub fn from(identity: CatFactEntity) -> CatFactPresenter {
+    pub fn from(entity: CatFactEntity) -> CatFactPresenter {
         CatFactPresenter {
-            fact: identity.fact_txt,
-            nb_chars: identity.fact_length
+            fact: entity.fact_txt,
+            nb_chars: entity.fact_length,
         }
     }
 }

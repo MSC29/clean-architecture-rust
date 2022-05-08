@@ -1,2 +1,4 @@
--- Your SQL goes here
-CREATE TABLE IF NOT EXISTS "dog_facts" (id INTEGER PRIMARY KEY AUTOINCREMENT, fact TEXT)
+CREATE TABLE "dog_facts" (
+  id SERIAL PRIMARY KEY,
+  fact VARCHAR NOT NULL
+);
