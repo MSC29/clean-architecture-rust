@@ -43,8 +43,8 @@ ENV=dev cargo run
 Used in CI/CD
 
 ```bash
-fmt --all -- --check
-clippy --all-targets
+cargo fmt --all -- --check
+cargo clippy --all-targets
 cargo audit
 ```
 

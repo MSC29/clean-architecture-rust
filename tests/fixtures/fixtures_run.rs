@@ -1,4 +1,4 @@
-use animal_facts_api::adapters::spi::db::db::DbConnection;
+use animal_facts_api::adapters::spi::db::db_connection::DbConnection;
 use animal_facts_api::adapters::spi::db::schema::dog_facts::dsl::*;
 use diesel::{insert_into, RunQueryDsl};
 

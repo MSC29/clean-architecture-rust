@@ -3,7 +3,7 @@ use async_trait::async_trait;
 use diesel::prelude::*;
 use std::error::Error;
 
-use crate::adapters::spi::db::{db::DbConnection, models::DogFact, schema::dog_facts::dsl::*};
+use crate::adapters::spi::db::{db_connection::DbConnection, models::DogFact, schema::dog_facts::dsl::*};
 use crate::application::repositories::dog_facts_repository_abstract::DogFactsRepositoryAbstract;
 use crate::domain::dog_fact_entity::DogFactEntity;
 

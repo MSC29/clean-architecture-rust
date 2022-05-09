@@ -4,8 +4,8 @@ use crate::adapters::{
     self,
     api::shared::app_state::AppState,
     spi::{
-        db::{db::DbConnection, dog_facts_repository::DogFactsRepository},
-        http::{cat_facts_repository::CatFactsRepository, http::HttpConnection},
+        db::{db_connection::DbConnection, dog_facts_repository::DogFactsRepository},
+        http::{cat_facts_repository::CatFactsRepository, http_connection::HttpConnection},
     },
 };
 use actix_web::{dev::Server, middleware::Logger};

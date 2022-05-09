@@ -15,7 +15,7 @@ impl<'a> GetOneDogFactByIdUseCase<'a> {
     }
 
     pub async fn execute(&self) -> Result<DogFactEntity, ApiError> {
-        let dog_fact = self.repository.get_dog_fact_by_id(self.dog_fact_id.clone()).await;
+        let dog_fact = self.repository.get_dog_fact_by_id(*self.dog_fact_id).await;
 
         match dog_fact {
             Ok(dog_fact) => Ok(dog_fact),

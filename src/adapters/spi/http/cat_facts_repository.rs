@@ -2,7 +2,7 @@ use async_trait::async_trait;
 //TODO should use http_connection
 
 use crate::{
-    adapters::spi::http::{http::HttpConnection, models::CatFactApiModel},
+    adapters::spi::http::{http_connection::HttpConnection, models::CatFactApiModel},
     application::repositories::cat_facts_repository_abstract::CatFactsRepositoryAbstract,
     domain::cat_fact_entity::CatFactEntity,
 };

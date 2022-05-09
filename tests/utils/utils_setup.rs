@@ -20,7 +20,7 @@ pub fn spawn_app(db_name: &str) -> String {
 
     let _ = tokio::spawn(server);
 
-    if let Ok(_) = TcpStream::connect("localhost:3333") {
+    if TcpStream::connect("localhost:3333").is_ok() {
         println!("Http source faked server already running");
     } else {
         spawn_http_spi();
@@ -51,7 +51,7 @@ pub fn spawn_http_spi() -> String {
 
     let _ = tokio::spawn(s1);
 
-    format!("http://127.0.0.1:3333")
+    "http://127.0.0.1:3333".to_string()
 }
 
 pub fn setup() -> TestContextPostgreSQL {
