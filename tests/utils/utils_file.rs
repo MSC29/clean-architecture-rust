@@ -7,8 +7,5 @@ pub fn read_from_file<T: de::DeserializeOwned>(path: &str) -> Result<T, Box<dyn 
     let file = File::open(path)?;
     let reader = BufReader::new(file);
 
-    //TODO Error Handling
-    let u = serde_json::from_reader(reader).unwrap();
-
-    Ok(u)
+    Ok(serde_json::from_reader(reader).unwrap())
 }

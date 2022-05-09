@@ -25,6 +25,7 @@ async fn test_should_return_one_results_only() {
     let _ctx = setup();
     let api_address = spawn_app(&_ctx.db_name);
 
+    //TODO BDD comments
     let response = reqwest::get(&format!("{}/api/v1/cats/random", &api_address)).await.expect("Failed to execute request.");
 
     assert!(response.status().is_success());

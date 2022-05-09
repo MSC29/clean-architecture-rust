@@ -17,10 +17,9 @@ async fn test_should_return_multiple_results() {
 
     let content_json = response.json::<Vec<DogFactPresenter>>().await.unwrap();
 
-    //TODO same data set as python
     assert_eq!(content_json.len(), 3);
-    assert_eq!(content_json[0].fact_id, 1);
     assert_eq!(content_json[0].txt, "Forty-five percent of U.S. dogs sleep in their owner's bed");
+    assert_eq!(content_json[0].fact_id, 1);
 }
 
 #[actix_rt::test]
@@ -40,7 +39,6 @@ async fn test_should_return_one_results_only() {
 
     let content_json = response.json::<DogFactPresenter>().await.unwrap();
 
-    //TODO same data set as python
     assert_eq!(content_json.txt, "Seventy percent of people sign their dog's name on their holiday cards");
     assert_eq!(content_json.fact_id, 2);
 }

@@ -20,7 +20,6 @@ pub fn server(listener: TcpListener, db_name: &str) -> Result<Server, std::io::E
     let db_connection = DbConnection { db_name: db_name.to_string() };
     let http_connection = HttpConnection {};
 
-    //TODO pass pool as property rather than to each repo
     let data = web::Data::new(AppState {
         app_name: String::from("Animal Facts API"),
         cats_repository: CatFactsRepository {
