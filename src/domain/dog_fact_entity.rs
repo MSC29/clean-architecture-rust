@@ -4,14 +4,8 @@ pub struct DogFactEntity {
     pub fact: String,
 }
 
-//TODO remove
-pub type DogEntities = Vec<DogFactEntity>;
-
 impl DogFactEntity {
     pub fn new(fact_id: i32, fact: String) -> Self {
-        DogFactEntity {
-            fact_id,
-            fact,
-        }
+        DogFactEntity { fact_id, fact }
     }
 }

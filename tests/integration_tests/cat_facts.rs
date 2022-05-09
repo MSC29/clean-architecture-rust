@@ -1,4 +1,4 @@
-use crate::utils::utils_setup::{setup, spawn_app, spawn_http_spi};
+use crate::utils::utils_setup::{setup, spawn_app};
 use animal_facts_api::adapters::api::cat_facts::cat_fact_presenter::CatFactPresenter;
 
 #[actix_rt::test]

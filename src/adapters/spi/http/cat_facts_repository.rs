@@ -17,7 +17,7 @@ pub struct CatFactsRepository {
 
 #[async_trait(?Send)]
 impl CatFactsRepositoryAbstract for CatFactsRepository {
-    async fn get_cat_fact(&self) -> Result<CatFactEntity, Box<dyn Error>> {
+    async fn get_random_cat_fact(&self) -> Result<CatFactEntity, Box<dyn Error>> {
         print!("{}/facts", &self.source);
         let response = self.http_connection.client().get(&format!("{}/fact", &self.source)).send().await;
 
@@ -42,7 +42,7 @@ impl CatFactsRepositoryAbstract for CatFactsRepository {
         }
     }
 
-    async fn get_cat_facts(&self) -> Result<Vec<CatFactEntity>, Box<dyn Error>> {
+    async fn get_all_cat_facts(&self) -> Result<Vec<CatFactEntity>, Box<dyn Error>> {
         let response = self.http_connection.client().get(&format!("{}/facts", &self.source)).send().await;
 
         match response {

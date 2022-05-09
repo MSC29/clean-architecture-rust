@@ -37,4 +37,4 @@ reqwest={version="0.11", features = ["json"]}
 [dev-dependencies]
 cargo-tarpaulin = "0.18.0-alpha1"
 uuid = { version = "~0.8", features = ["serde", "v4"] }
-httpmock = "0.6"
+mockall = "0.11.0"
