@@ -1,5 +1,4 @@
-use crate::adapters::spi::{http::cat_facts_repository::CatFactsRepository, db::dog_facts_repository::DogFactsRepository};
-
+use crate::adapters::spi::{db::dog_facts_repository::DogFactsRepository, http::cat_facts_repository::CatFactsRepository};
 
 pub struct AppState {
     pub app_name: String,

@@ -1,8 +1,12 @@
-use std::{net::TcpListener, env};
+use std::{env, net::TcpListener};
 
 use crate::adapters::{
     self,
-    spi::{http::{cat_facts_repository::CatFactsRepository, http::HttpConnection}, db::{dog_facts_repository::DogFactsRepository, db::{DbConnection}}}, api::shared::app_state::AppState,
+    api::shared::app_state::AppState,
+    spi::{
+        db::{db::DbConnection, dog_facts_repository::DogFactsRepository},
+        http::{cat_facts_repository::CatFactsRepository, http::HttpConnection},
+    },
 };
 use actix_web::{dev::Server, middleware::Logger};
 use actix_web::{web, App, HttpServer};
@@ -13,23 +17,22 @@ pub fn server(listener: TcpListener, db_name: &str) -> Result<Server, std::io::E
 
     env_logger::try_init();
 
-    let db_connection = DbConnection{db_name: db_name.to_string()};
-    let http_connection = HttpConnection{};
+    let db_connection = DbConnection { db_name: db_name.to_string() };
+    let http_connection = HttpConnection {};
 
     //TODO pass pool as property rather than to each repo
     let data = web::Data::new(AppState {
         app_name: String::from("Animal Facts API"),
-        cats_repository: CatFactsRepository { http_connection, source: env::var("CATS_SOURCE").expect("CATS_SOURCE must be set") },
+        cats_repository: CatFactsRepository {
+            http_connection,
+            source: env::var("CATS_SOURCE").expect("CATS_SOURCE must be set"),
+        },
         dogs_repository: DogFactsRepository { db_connection },
     });
 
     let port = listener.local_addr().unwrap().port();
 
-    let server = HttpServer::new(move || 
-            App::new()
-                .app_data(data.clone())
-                .wrap(Logger::default())
-                .configure(adapters::api::shared::routes::routes))
+    let server = HttpServer::new(move || App::new().app_data(data.clone()).wrap(Logger::default()).configure(adapters::api::shared::routes::routes))
         .listen(listener)?
         .run();
 
