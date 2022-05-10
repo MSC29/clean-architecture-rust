@@ -52,8 +52,6 @@ mod tests {
         assert_eq!("Cannot get single dog fact", result.message);
     }
 
-    // TODO implement test test_should_return_custom_message_when_expected_repo_error when error handling improved
-
     #[actix_rt::test]
     async fn test_should_return_one_result() {
         // given the "one dog fact by id" usecase repo returning one result

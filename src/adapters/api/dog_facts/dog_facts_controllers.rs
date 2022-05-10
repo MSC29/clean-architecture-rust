@@ -1,9 +1,12 @@
 use crate::{
     adapters::api::{
-        dog_facts::dog_fact_presenter::DogFactPresenter,
+        dog_facts::{dog_facts_mappers::DogFactPresenterMapper, dog_facts_presenters::DogFactPresenter},
         shared::{app_state::AppState, error_presenter::ErrorReponse},
     },
-    application::usecases::{get_all_dog_facts_usecase::GetAllDogFactsUseCase, get_one_dog_fact_by_id_usecase::GetOneDogFactByIdUseCase},
+    application::{
+        mappers::api_mapper::ApiMapper,
+        usecases::{get_all_dog_facts_usecase::GetAllDogFactsUseCase, get_one_dog_fact_by_id_usecase::GetOneDogFactByIdUseCase},
+    },
     domain::{dog_fact_entity::DogFactEntity, error::ApiError},
 };
 use actix_web::{get, web, HttpResponse};
@@ -19,7 +22,7 @@ async fn get_all_dog_facts(data: web::Data<AppState>) -> Result<HttpResponse, Er
 
     dog_facts
         .map_err(ErrorReponse::map_io_error)
-        .and_then(|facts| Ok(HttpResponse::Ok().json(facts.into_iter().map(DogFactPresenter::from).collect::<Vec<DogFactPresenter>>())))
+        .and_then(|facts| Ok(HttpResponse::Ok().json(facts.into_iter().map(|fact| DogFactPresenterMapper::to_api(fact)).collect::<Vec<DogFactPresenter>>())))
 }
 
 #[get("/{fact_id}")]
@@ -30,5 +33,5 @@ async fn get_one_dog_fact_by_id(data: web::Data<AppState>, path: web::Path<(i32,
 
     dog_fact
         .map_err(ErrorReponse::map_io_error)
-        .and_then(|fact| Ok(HttpResponse::Ok().json(DogFactPresenter::from(fact))))
+        .and_then(|fact| Ok(HttpResponse::Ok().json(DogFactPresenterMapper::to_api(fact))))
 }

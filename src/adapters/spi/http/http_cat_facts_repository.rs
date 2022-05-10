@@ -1,14 +1,15 @@
 use async_trait::async_trait;
-//TODO should use http_connection
-
-use crate::{
-    adapters::spi::http::{http_connection::HttpConnection, models::CatFactApiModel},
-    application::repositories::cat_facts_repository_abstract::CatFactsRepositoryAbstract,
-    domain::cat_fact_entity::CatFactEntity,
-};
 use std::error::Error;
 
-use super::models::CatFactsApiModel;
+use crate::{
+    adapters::spi::http::{
+        http_connection::HttpConnection,
+        http_mappers::CatFactHttpMapper,
+        http_models::{CatFactApiModel, CatFactsApiModel},
+    },
+    application::{mappers::http_mapper::HttpMapper, repositories::cat_facts_repository_abstract::CatFactsRepositoryAbstract},
+    domain::cat_fact_entity::CatFactEntity,
+};
 
 pub struct CatFactsRepository {
     pub http_connection: HttpConnection,
@@ -22,18 +23,10 @@ impl CatFactsRepositoryAbstract for CatFactsRepository {
 
         match response {
             Ok(r) => {
-                //TODO mapper
                 let json = r.json::<CatFactApiModel>().await;
 
                 match json {
-                    Ok(j) => {
-                        let entity = CatFactEntity {
-                            fact_txt: j.fact,
-                            fact_length: j.length,
-                        };
-
-                        Ok(entity)
-                    }
+                    Ok(http_obj) => Ok(CatFactHttpMapper::to_entity(http_obj)),
                     Err(e) => Err(Box::new(e)),
                 }
             }
@@ -46,18 +39,10 @@ impl CatFactsRepositoryAbstract for CatFactsRepository {
 
         match response {
             Ok(r) => {
-                //TODO mapper
                 let json = r.json::<CatFactsApiModel>().await;
 
                 match json {
-                    Ok(j) => Ok(j
-                        .data
-                        .iter()
-                        .map(|model| CatFactEntity {
-                            fact_txt: model.fact.clone(),
-                            fact_length: model.length,
-                        })
-                        .collect::<Vec<CatFactEntity>>()),
+                    Ok(j) => Ok(j.data.into_iter().map(|http_obj| CatFactHttpMapper::to_entity(http_obj)).collect::<Vec<CatFactEntity>>()),
                     Err(e) => Err(Box::new(e)),
                 }
             }

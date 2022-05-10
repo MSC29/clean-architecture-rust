@@ -1,18 +1,18 @@
 use crate::utils::utils_setup::{setup, spawn_app};
-use animal_facts_api::adapters::api::dog_facts::dog_fact_presenter::DogFactPresenter;
+use animal_facts_api::adapters::api::dog_facts::dog_facts_presenters::DogFactPresenter;
 
 #[actix_rt::test]
 async fn test_should_return_multiple_results() {
-    //setup
+    // setup
     let _ctx = setup();
     let api_address = spawn_app(&_ctx.db_name);
 
-    //given
+    // given the "all dog facts" route
 
-    //when
+    // when getting
     let response = reqwest::get(&format!("{}/api/v1/dogs/", &api_address)).await.expect("Failed to execute request.");
 
-    //then
+    // then expect 3 results (inserted in db)
     assert!(response.status().is_success());
 
     let content_json = response.json::<Vec<DogFactPresenter>>().await.unwrap();
@@ -24,17 +24,17 @@ async fn test_should_return_multiple_results() {
 
 #[actix_rt::test]
 async fn test_should_return_one_results_only() {
-    //setup
+    // setup
     let _ctx = setup();
     let api_address = spawn_app(&_ctx.db_name);
 
-    //given
+    // given the "single dog facts" route
     let dog_fact_id: i8 = 2;
 
-    //when
+    // when getting
     let response = reqwest::get(&format!("{}/api/v1/dogs/{}", &api_address, &dog_fact_id)).await.expect("Failed to execute request.");
 
-    //then
+    // then expect 1 result (id 2 inserted in db)
     assert!(response.status().is_success());
 
     let content_json = response.json::<DogFactPresenter>().await.unwrap();

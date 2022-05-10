@@ -1,6 +1,7 @@
+use crate::application::mappers::api_mapper::ApiMapper;
 use crate::{
     adapters::api::{
-        cat_facts::cat_fact_presenter::CatFactPresenter,
+        cat_facts::{cat_facts_mappers::CatFactPresenterMapper, cat_facts_presenters::CatFactPresenter},
         shared::{app_state::AppState, error_presenter::ErrorReponse},
     },
     application::usecases::{get_all_cat_facts_usecase::GetAllCatFactsUseCase, get_one_random_cat_fact_usecase::GetOneRandomCatFactUseCase},
@@ -18,7 +19,7 @@ async fn get_all_cat_facts(data: web::Data<AppState>) -> Result<HttpResponse, Er
 
     cat_facts
         .map_err(ErrorReponse::map_io_error)
-        .and_then(|identities| Ok(HttpResponse::Ok().json(identities.into_iter().map(CatFactPresenter::from).collect::<Vec<CatFactPresenter>>())))
+        .and_then(|facts| Ok(HttpResponse::Ok().json(facts.into_iter().map(|fact| CatFactPresenterMapper::to_api(fact)).collect::<Vec<CatFactPresenter>>())))
 }
 
 #[get("/random")]
@@ -28,5 +29,5 @@ async fn get_one_random_cat_fact(data: web::Data<AppState>) -> Result<HttpRespon
 
     cat_fact
         .map_err(ErrorReponse::map_io_error)
-        .and_then(|fact| Ok(HttpResponse::Ok().json(CatFactPresenter::from(fact))))
+        .and_then(|fact| Ok(HttpResponse::Ok().json(CatFactPresenterMapper::to_api(fact))))
 }

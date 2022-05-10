@@ -1,4 +1,5 @@
 pub mod db_connection;
-pub mod dog_facts_repository;
+pub mod db_dog_facts_repository;
+pub mod db_mappers;
 pub mod models;
 pub mod schema;

@@ -49,8 +49,6 @@ mod tests {
         assert_eq!("Cannot get all dog facts", result.message);
     }
 
-    // TODO implement test test_should_return_custom_message_when_expected_repo_error when error handling improved
-
     #[actix_rt::test]
     async fn test_should_return_empty_list() {
         // given the "all dog facts" usecase repo returning an empty list

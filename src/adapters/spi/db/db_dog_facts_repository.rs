@@ -1,10 +1,9 @@
-use actix_web::web;
 use async_trait::async_trait;
 use diesel::prelude::*;
 use std::error::Error;
 
-use crate::adapters::spi::db::{db_connection::DbConnection, models::DogFact, schema::dog_facts::dsl::*};
-use crate::application::repositories::dog_facts_repository_abstract::DogFactsRepositoryAbstract;
+use crate::adapters::spi::db::{db_connection::DbConnection, db_mappers::DogFactDbMapper, models::DogFact, schema::dog_facts::dsl::*};
+use crate::application::{mappers::db_mapper::DbMapper, repositories::dog_facts_repository_abstract::DogFactsRepositoryAbstract};
 use crate::domain::dog_fact_entity::DogFactEntity;
 
 pub struct DogFactsRepository {
@@ -19,7 +18,7 @@ impl DogFactsRepositoryAbstract for DogFactsRepository {
         let result = dog_facts.filter(id.eq(dog_fact_id)).get_result::<DogFact>(&conn);
 
         match result {
-            Ok(r) => Ok(DogFactEntity::new(r.id, r.fact)),
+            Ok(db_obj) => Ok(DogFactDbMapper::to_entity(db_obj)),
             Err(e) => Err(Box::new(e)),
         }
     }
@@ -30,7 +29,7 @@ impl DogFactsRepositoryAbstract for DogFactsRepository {
         let results = dog_facts.load::<DogFact>(&conn);
 
         match results {
-            Ok(r) => Ok(r.into_iter().map(|n| DogFactEntity::new(n.id, n.fact)).collect::<Vec<DogFactEntity>>()),
+            Ok(models) => Ok(models.into_iter().map(|db_obj| DogFactDbMapper::to_entity(db_obj)).collect::<Vec<DogFactEntity>>()),
             Err(e) => Err(Box::new(e)),
         }
     }

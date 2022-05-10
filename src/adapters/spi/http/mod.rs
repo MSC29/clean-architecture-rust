@@ -1,3 +1,4 @@
-pub mod cat_facts_repository;
+pub mod http_cat_facts_repository;
 pub mod http_connection;
-pub mod models;
+pub mod http_mappers;
+pub mod http_models;

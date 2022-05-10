@@ -1,13 +1,12 @@
 use actix_web::{web, App, HttpResponse, HttpServer};
-use animal_facts_api::adapters::spi::http::models::{CatFactApiModel, CatFactsApiModel};
 use dotenv::dotenv;
 use std::net::TcpStream;
 use std::{env, net::TcpListener};
 use uuid::Uuid;
 
-use crate::utils::utils_file::read_from_file;
-
 use super::test_context::TestContextPostgreSQL;
+use crate::utils::utils_file::read_from_file;
+use animal_facts_api::adapters::spi::http::http_models::{CatFactApiModel, CatFactsApiModel};
 
 pub fn spawn_app(db_name: &str) -> String {
     dotenv::from_filename(".env.test").ok();
