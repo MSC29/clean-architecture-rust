@@ -12,8 +12,8 @@ use actix_web::{dev::Server, middleware::Logger};
 use actix_web::{web, App, HttpServer};
 
 pub fn server(listener: TcpListener, db_name: &str) -> Result<Server, std::io::Error> {
-    std::env::set_var("RUST_BACKTRACE", "1");
-    std::env::set_var("RUST_LOG", "actix_web=debug");
+    env::set_var("RUST_BACKTRACE", "1");
+    env::set_var("RUST_LOG", "actix_web=debug");
 
     env_logger::try_init();
 
@@ -24,7 +24,7 @@ pub fn server(listener: TcpListener, db_name: &str) -> Result<Server, std::io::E
         app_name: String::from("Animal Facts API"),
         cats_repository: CatFactsRepository {
             http_connection,
-            source: env::var("CATS_SOURCE").expect("CATS_SOURCE must be set"),
+            source: dotenv::var("CATS_SOURCE").expect("CATS_SOURCE must be set"),
         },
         dogs_repository: DogFactsRepository { db_connection },
     });

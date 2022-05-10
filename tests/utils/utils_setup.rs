@@ -1,5 +1,4 @@
 use actix_web::{web, App, HttpResponse, HttpServer};
-use dotenv::dotenv;
 use std::net::TcpStream;
 use std::{env, net::TcpListener};
 use uuid::Uuid;
@@ -9,8 +8,6 @@ use crate::utils::utils_file::read_from_file;
 use animal_facts_api::adapters::spi::http::http_models::{CatFactApiModel, CatFactsApiModel};
 
 pub fn spawn_app(db_name: &str) -> String {
-    dotenv::from_filename(".env.test").ok();
-
     // Let the OS assign a port (:0)
     let listener = TcpListener::bind("127.0.0.1:0").expect("Failed to bind random port");
 
@@ -29,8 +26,6 @@ pub fn spawn_app(db_name: &str) -> String {
 }
 
 pub fn spawn_http_spi() -> String {
-    dotenv::from_filename(".env.test").ok();
-
     async fn facts_route() -> HttpResponse {
         let json = read_from_file::<CatFactsApiModel>("tests/fixtures/cat_facts.json").unwrap();
         HttpResponse::Ok().json(json)
@@ -54,9 +49,11 @@ pub fn spawn_http_spi() -> String {
 }
 
 pub fn setup() -> TestContextPostgreSQL {
-    dotenv().ok();
+    // first method loaded in integration test, requires ENV env var
+    dotenv::from_filename(format!(".env.{}", env::var("ENV").expect("ENV must be set"))).ok();
+
     TestContextPostgreSQL::new(
-        &env::var("DATABASE_URL").expect("DATABASE_URL must be set"),
+        &dotenv::var("DATABASE_URL").expect("DATABASE_URL must be set"),
         //db name cannot start with a number
         format!("test_{}", Uuid::new_v4().to_simple().to_string()).as_str(),
     )
