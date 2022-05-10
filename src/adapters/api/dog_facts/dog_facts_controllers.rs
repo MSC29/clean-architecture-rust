@@ -5,7 +5,7 @@ use crate::{
     },
     application::{
         mappers::api_mapper::ApiMapper,
-        usecases::{get_all_dog_facts_usecase::GetAllDogFactsUseCase, get_one_dog_fact_by_id_usecase::GetOneDogFactByIdUseCase},
+        usecases::{get_all_dog_facts_usecase::GetAllDogFactsUseCase, get_one_dog_fact_by_id_usecase::GetOneDogFactByIdUseCase, interfaces::AbstractUseCase},
     },
     domain::{dog_fact_entity::DogFactEntity, error::ApiError},
 };

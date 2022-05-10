@@ -1,5 +1,7 @@
+use async_trait::async_trait;
+
 use crate::{
-    application::{repositories::dog_facts_repository_abstract::DogFactsRepositoryAbstract, utils::error_handling_utils::ErrorHandlingUtils},
+    application::{repositories::dog_facts_repository_abstract::DogFactsRepositoryAbstract, usecases::interfaces::AbstractUseCase, utils::error_handling_utils::ErrorHandlingUtils},
     domain::{dog_fact_entity::DogFactEntity, error::ApiError},
 };
 
@@ -7,13 +9,15 @@ pub struct GetAllDogFactsUseCase<'a> {
     repository: &'a dyn DogFactsRepositoryAbstract,
 }
 
-//TODO try to implement AbstractUseCase
 impl<'a> GetAllDogFactsUseCase<'a> {
     pub fn new(repository: &'a dyn DogFactsRepositoryAbstract) -> Self {
         GetAllDogFactsUseCase { repository }
     }
+}
 
-    pub async fn execute(&self) -> Result<Vec<DogFactEntity>, ApiError> {
+#[async_trait(?Send)]
+impl<'a> AbstractUseCase<Vec<DogFactEntity>> for GetAllDogFactsUseCase<'a> {
+    async fn execute(&self) -> Result<Vec<DogFactEntity>, ApiError> {
         let dog_facts = self.repository.get_all_dog_facts().await;
 
         match dog_facts {
@@ -26,8 +30,9 @@ impl<'a> GetAllDogFactsUseCase<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{application::repositories::dog_facts_repository_abstract::MockDogFactsRepositoryAbstract, domain::dog_fact_entity::DogFactEntity};
     use std::io::{Error, ErrorKind};
+
+    use crate::{application::repositories::dog_facts_repository_abstract::MockDogFactsRepositoryAbstract, domain::dog_fact_entity::DogFactEntity};
 
     #[actix_rt::test]
     async fn test_should_return_error_with_generic_message_when_unexpected_repo_error() {

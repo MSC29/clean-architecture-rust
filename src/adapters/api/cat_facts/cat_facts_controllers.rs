@@ -1,4 +1,5 @@
 use crate::application::mappers::api_mapper::ApiMapper;
+use crate::application::usecases::interfaces::AbstractUseCase;
 use crate::{
     adapters::api::{
         cat_facts::{cat_facts_mappers::CatFactPresenterMapper, cat_facts_presenters::CatFactPresenter},

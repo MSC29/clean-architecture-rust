@@ -1,5 +1,7 @@
+use async_trait::async_trait;
+
 use crate::{
-    application::{repositories::dog_facts_repository_abstract::DogFactsRepositoryAbstract, utils::error_handling_utils::ErrorHandlingUtils},
+    application::{repositories::dog_facts_repository_abstract::DogFactsRepositoryAbstract, usecases::interfaces::AbstractUseCase, utils::error_handling_utils::ErrorHandlingUtils},
     domain::{dog_fact_entity::DogFactEntity, error::ApiError},
 };
 
@@ -8,13 +10,15 @@ pub struct GetOneDogFactByIdUseCase<'a> {
     repository: &'a dyn DogFactsRepositoryAbstract,
 }
 
-//TODO try to implement AbstractUseCase
 impl<'a> GetOneDogFactByIdUseCase<'a> {
     pub fn new(dog_fact_id: &'a i32, repository: &'a dyn DogFactsRepositoryAbstract) -> Self {
         GetOneDogFactByIdUseCase { dog_fact_id, repository }
     }
+}
 
-    pub async fn execute(&self) -> Result<DogFactEntity, ApiError> {
+#[async_trait(?Send)]
+impl<'a> AbstractUseCase<DogFactEntity> for GetOneDogFactByIdUseCase<'a> {
+    async fn execute(&self) -> Result<DogFactEntity, ApiError> {
         let dog_fact = self.repository.get_dog_fact_by_id(*self.dog_fact_id).await;
 
         match dog_fact {
@@ -26,11 +30,11 @@ impl<'a> GetOneDogFactByIdUseCase<'a> {
 
 #[cfg(test)]
 mod tests {
-    use mockall::predicate::eq;
-
     use super::*;
-    use crate::{application::repositories::dog_facts_repository_abstract::MockDogFactsRepositoryAbstract, domain::dog_fact_entity::DogFactEntity};
+    use mockall::predicate::eq;
     use std::io::{Error, ErrorKind};
+
+    use crate::{application::repositories::dog_facts_repository_abstract::MockDogFactsRepositoryAbstract, domain::dog_fact_entity::DogFactEntity};
 
     #[actix_rt::test]
     async fn test_should_return_error_with_generic_message_when_unexpected_repo_error() {

@@ -1,5 +1,7 @@
+use async_trait::async_trait;
+
 use crate::{
-    application::{repositories::cat_facts_repository_abstract::CatFactsRepositoryAbstract, utils::error_handling_utils::ErrorHandlingUtils},
+    application::{repositories::cat_facts_repository_abstract::CatFactsRepositoryAbstract, usecases::interfaces::AbstractUseCase, utils::error_handling_utils::ErrorHandlingUtils},
     domain::{cat_fact_entity::CatFactEntity, error::ApiError},
 };
 
@@ -7,13 +9,15 @@ pub struct GetOneRandomCatFactUseCase<'a> {
     repository: &'a dyn CatFactsRepositoryAbstract,
 }
 
-//TODO try to implement AbstractUseCase
 impl<'a> GetOneRandomCatFactUseCase<'a> {
     pub fn new(repository: &'a dyn CatFactsRepositoryAbstract) -> Self {
         GetOneRandomCatFactUseCase { repository }
     }
+}
 
-    pub async fn execute(&self) -> Result<CatFactEntity, ApiError> {
+#[async_trait(?Send)]
+impl<'a> AbstractUseCase<CatFactEntity> for GetOneRandomCatFactUseCase<'a> {
+    async fn execute(&self) -> Result<CatFactEntity, ApiError> {
         let cat_fact = self.repository.get_random_cat_fact().await;
 
         match cat_fact {
@@ -26,8 +30,9 @@ impl<'a> GetOneRandomCatFactUseCase<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::application::{repositories::cat_facts_repository_abstract::MockCatFactsRepositoryAbstract, usecases::get_one_random_cat_fact_usecase::GetOneRandomCatFactUseCase};
     use std::io::{Error, ErrorKind};
+
+    use crate::application::{repositories::cat_facts_repository_abstract::MockCatFactsRepositoryAbstract, usecases::get_one_random_cat_fact_usecase::GetOneRandomCatFactUseCase};
 
     #[actix_rt::test]
     async fn test_should_return_generic_message_when_unexpected_repo_error() {
