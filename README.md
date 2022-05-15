@@ -46,6 +46,7 @@ Used in CI/CD
 cargo fmt --all -- --check
 cargo clippy --all-targets
 cargo audit
+cargo outdated
 ```
 
 # Testing

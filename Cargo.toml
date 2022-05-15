@@ -14,27 +14,25 @@ name = "animal_facts_api"
 path = "src/lib.rs"
 
 [dependencies]
-actix = "~0.10.0"
 actix-web = { version = "4", features = ["openssl"] }
-actix-rt = "~2.6"
-actix-http = "3.0.0-beta.8"
+actix-rt = "~2.7"
+actix-http = "~3.0"
 log = "~0.4.0"
-env_logger = "~0.7.1"
-failure = "~0.1.6"
-serde = "~1.0.104"
+env_logger = "~0.9"
+failure = "~0.1"
+serde = "~1.0"
 serde_json = "~1.0"
-async-trait = "~0.1.22"
-awc = "~1.0.1"
-diesel = { version = "~1.4.4", features = ["postgres", "r2d2", "uuidv07"] }
+async-trait = "~0.1"
+diesel = { version = "~1.4", features = ["postgres", "r2d2", "uuidv07"] }
 diesel_migrations = "~1.4"
-dotenv = "~0.15.0"
+dotenv = "~0.15"
 r2d2 = "~0.8"
-tokio = { version = "1", features = ["full"] }
-thiserror = "1.0"
-derive_more = "0.99.0"
+tokio = { version = "~1.18", features = ["full"] }
+thiserror = "~1.0"
+derive_more = "~0.99"
 reqwest={version="0.11", features = ["json"]}
 
 [dev-dependencies]
-cargo-tarpaulin = "0.18.0-alpha1"
-uuid = { version = "~0.8", features = ["serde", "v4"] }
-mockall = "0.11.0"
+cargo-tarpaulin = "~0.20"
+uuid = { version = "~1.0", features = ["serde", "v4"] }
+mockall = "~0.11"

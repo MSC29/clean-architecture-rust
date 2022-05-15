@@ -55,6 +55,6 @@ pub fn setup() -> TestContextPostgreSQL {
     TestContextPostgreSQL::new(
         &dotenv::var("DATABASE_URL").expect("DATABASE_URL must be set"),
         //db name cannot start with a number
-        format!("test_{}", Uuid::new_v4().to_simple().to_string()).as_str(),
+        format!("test_{}", Uuid::new_v4().as_simple()).as_str(),
     )
 }
