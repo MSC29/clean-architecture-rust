@@ -27,7 +27,7 @@ pub fn spawn_app(db_name: &str) -> String {
 
 pub fn spawn_http_spi() -> String {
     async fn facts_route() -> HttpResponse {
-        let json = read_from_file::<CatFactsApiModel>("tests/fixtures/cat_facts.json").unwrap();
+        let json = read_from_file::<CatFactsApiModel>("tests/integration_tests/fixtures/cat_facts.json").unwrap();
         HttpResponse::Ok().json(json)
     }
 

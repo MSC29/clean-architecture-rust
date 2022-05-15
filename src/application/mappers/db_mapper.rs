@@ -3,5 +3,5 @@ pub trait DbMapper<Entity, DbModel> {
     fn to_db(entity: Entity) -> DbModel;
 
     // Map a DbModel to an Entity
-    fn to_entity(db_obj: DbModel) -> Entity;
+    fn to_entity(model: DbModel) -> Entity;
 }

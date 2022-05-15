@@ -22,7 +22,7 @@ async fn get_all_dog_facts(data: web::Data<AppState>) -> Result<HttpResponse, Er
 
     dog_facts
         .map_err(ErrorReponse::map_io_error)
-        .and_then(|facts| Ok(HttpResponse::Ok().json(facts.into_iter().map(|fact| DogFactPresenterMapper::to_api(fact)).collect::<Vec<DogFactPresenter>>())))
+        .map(|facts| HttpResponse::Ok().json(facts.into_iter().map(DogFactPresenterMapper::to_api).collect::<Vec<DogFactPresenter>>()))
 }
 
 #[get("/{fact_id}")]
@@ -33,5 +33,5 @@ async fn get_one_dog_fact_by_id(data: web::Data<AppState>, path: web::Path<(i32,
 
     dog_fact
         .map_err(ErrorReponse::map_io_error)
-        .and_then(|fact| Ok(HttpResponse::Ok().json(DogFactPresenterMapper::to_api(fact))))
+        .map(|fact| HttpResponse::Ok().json(DogFactPresenterMapper::to_api(fact)))
 }

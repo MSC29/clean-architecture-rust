@@ -42,7 +42,7 @@ impl CatFactsRepositoryAbstract for CatFactsRepository {
                 let json = r.json::<CatFactsApiModel>().await;
 
                 match json {
-                    Ok(j) => Ok(j.data.into_iter().map(|http_obj| CatFactHttpMapper::to_entity(http_obj)).collect::<Vec<CatFactEntity>>()),
+                    Ok(j) => Ok(j.data.into_iter().map(CatFactHttpMapper::to_entity).collect::<Vec<CatFactEntity>>()),
                     Err(e) => Err(Box::new(e)),
                 }
             }

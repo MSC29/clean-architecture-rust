@@ -7,10 +7,10 @@ pub struct CatFactPresenterMapper {}
 
 impl ApiMapper<CatFactEntity, CatFactPresenter, CatFactPayload> for CatFactPresenterMapper {
     fn to_api(entity: CatFactEntity) -> CatFactPresenter {
-        return CatFactPresenter {
+        CatFactPresenter {
             fact: entity.fact_txt,
             nb_chars: entity.fact_length,
-        };
+        }
     }
 
     fn to_entity(_payload: CatFactPayload) -> CatFactEntity {

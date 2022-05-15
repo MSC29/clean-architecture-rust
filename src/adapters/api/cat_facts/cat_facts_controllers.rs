@@ -20,7 +20,7 @@ async fn get_all_cat_facts(data: web::Data<AppState>) -> Result<HttpResponse, Er
 
     cat_facts
         .map_err(ErrorReponse::map_io_error)
-        .and_then(|facts| Ok(HttpResponse::Ok().json(facts.into_iter().map(|fact| CatFactPresenterMapper::to_api(fact)).collect::<Vec<CatFactPresenter>>())))
+        .map(|facts| HttpResponse::Ok().json(facts.into_iter().map(CatFactPresenterMapper::to_api).collect::<Vec<CatFactPresenter>>()))
 }
 
 #[get("/random")]
@@ -30,5 +30,5 @@ async fn get_one_random_cat_fact(data: web::Data<AppState>) -> Result<HttpRespon
 
     cat_fact
         .map_err(ErrorReponse::map_io_error)
-        .and_then(|fact| Ok(HttpResponse::Ok().json(CatFactPresenterMapper::to_api(fact))))
+        .map(|fact| HttpResponse::Ok().json(CatFactPresenterMapper::to_api(fact)))
 }

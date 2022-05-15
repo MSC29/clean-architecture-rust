@@ -1,4 +1,3 @@
-pub mod fixtures;
 pub mod integration_tests;
 pub mod utils;
 

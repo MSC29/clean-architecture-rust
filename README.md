@@ -16,7 +16,7 @@ cargo build
 
 # Database setup
 
-it's currently configued to run with Postgresl through Diesel (ORM), but this being clean architecture feel free to change it :)
+It's currently configued to run with Postgresl through Diesel (ORM), but this being clean architecture feel free to change it :)
 
 I suggest
 
@@ -50,10 +50,15 @@ cargo audit
 
 # Testing
 
+Here's what done in order to mock the SPI
+
+- db: every test is creating a new database from `TestContextPostgreSQL` with json fixtures in `test/fixtures` & spawns the app with this database
+- http: every test also spins up another rust api (if not already up) with the expected routes but test data in `test/fixtures`
+
 ```bash
-ENV=test pytest
+ENV=test cargo test
 ```
 
 # API Documentation
 
-`http://127.0.0.1:8888/docs`
+TODO https://github.com/paperclip-rs/paperclip
