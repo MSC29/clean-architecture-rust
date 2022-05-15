@@ -20,6 +20,8 @@ jobs:
   test:
     name: Test Suite
     runs-on: ubuntu-latest
+    env:
+      ENV: test
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
