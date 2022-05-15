@@ -27,7 +27,7 @@ pub fn spawn_app(db_name: &str) -> String {
 
 pub fn spawn_http_spi() -> String {
     async fn facts_route() -> HttpResponse {
-        let json = read_from_file::<CatFactsApiModel>("tests/fixtures/cat_facts.json").unwrap();
+        let json = read_from_file::<CatFactsApiModel>("tests/integration_tests/fixtures/cat_facts.json").unwrap();
         HttpResponse::Ok().json(json)
     }
 
@@ -55,6 +55,6 @@ pub fn setup() -> TestContextPostgreSQL {
     TestContextPostgreSQL::new(
         &dotenv::var("DATABASE_URL").expect("DATABASE_URL must be set"),
         //db name cannot start with a number
-        format!("test_{}", Uuid::new_v4().to_simple().to_string()).as_str(),
+        format!("test_{}", Uuid::new_v4().as_simple()).as_str(),
     )
 }

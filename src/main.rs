@@ -6,7 +6,7 @@ use animal_facts_api::run;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let environment_file;
-    if let Some(e) = env::var("ENV").ok() {
+    if let Ok(e) = env::var("ENV") {
         environment_file = format!(".env.{}", e);
     } else {
         environment_file = String::from(".env");

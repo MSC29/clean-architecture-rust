@@ -6,10 +6,10 @@ pub struct DogFactPresenterMapper {}
 
 impl ApiMapper<DogFactEntity, DogFactPresenter, DogFactPayload> for DogFactPresenterMapper {
     fn to_api(entity: DogFactEntity) -> DogFactPresenter {
-        return DogFactPresenter {
+        DogFactPresenter {
             fact_id: entity.fact_id,
             txt: entity.fact,
-        };
+        }
     }
 
     fn to_entity(_payload: DogFactPayload) -> DogFactEntity {

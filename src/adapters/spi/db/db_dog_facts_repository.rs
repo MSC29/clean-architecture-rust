@@ -18,7 +18,7 @@ impl DogFactsRepositoryAbstract for DogFactsRepository {
         let result = dog_facts.filter(id.eq(dog_fact_id)).get_result::<DogFact>(&conn);
 
         match result {
-            Ok(db_obj) => Ok(DogFactDbMapper::to_entity(db_obj)),
+            Ok(model) => Ok(DogFactDbMapper::to_entity(model)),
             Err(e) => Err(Box::new(e)),
         }
     }
@@ -29,7 +29,7 @@ impl DogFactsRepositoryAbstract for DogFactsRepository {
         let results = dog_facts.load::<DogFact>(&conn);
 
         match results {
-            Ok(models) => Ok(models.into_iter().map(|db_obj| DogFactDbMapper::to_entity(db_obj)).collect::<Vec<DogFactEntity>>()),
+            Ok(models) => Ok(models.into_iter().map(DogFactDbMapper::to_entity).collect::<Vec<DogFactEntity>>()),
             Err(e) => Err(Box::new(e)),
         }
     }
