@@ -1,12 +1,10 @@
 # Clean architecture: rust
 
-A Clean Archtiecture template for a Rest API in rust
+A Clean Architecture template for a Rest API in rust
 
 # How it works
 
-TODO: proper doc & link to Rust & TypeScript repo
-
-TODO: documenting key interfaces & classes for clearer understanding & to evidence benefits of Clean Architecture
+Motivations, explanations, requirements & more details in my article [Practical Clean Architecture in Typescript, Rust & Python](https://dev.to/msc29/practical-clean-architecture-in-typescript-rust-python-3a6d)
 
 # Installing
 
@@ -16,11 +14,11 @@ cargo build
 
 # Database setup
 
-It's currently configued to run with Postgresl through Diesel (ORM), but this being clean architecture feel free to change it :)
+It's currently configured to run with PostgreSQL through Diesel (ORM), but this being clean architecture feel free to change it :)
 
 I suggest
 
-- postgresql [in docker](https://hub.docker.com/_/postgres/)
+- PostgreSQL [in docker](https://hub.docker.com/_/postgres/)
 - pgAdmin [install](https://www.pgadmin.org/download/pgadmin-4-apt/)
 
 Then install [diesel_cli](https://lib.rs/crates/diesel_cli)
@@ -62,4 +60,4 @@ ENV=test cargo test
 
 # API Documentation
 
-TODO https://github.com/paperclip-rs/paperclip
+TODO: https://github.com/paperclip-rs/paperclip
